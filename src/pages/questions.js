@@ -67,11 +67,6 @@ export const Quesition = () => {
                     filter2.push(val)
                 }
             }
-            if (ch3) {
-                if (val.chapter === "ch3") {
-                    filter2.push(val)
-                }
-            }
             if (ch4) {
                 if (val.chapter === "ch4") {
                     filter2.push(val)
