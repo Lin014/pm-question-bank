@@ -54,8 +54,9 @@ export const Manage = () => {
 
   return (
     <div>
-      <Navs />
-      <div className="container" style={{ marginTop: "70px"}}>
+      <Navs id="top"/>
+      <div className="container" style={{ marginTop: "70px" }}>
+        <a href="#top"><img alt="Go to top button" className="right-btn" src={require('../pictures/godgwawa2.png')}/></a>
         <h3 className="sub-title">Add Question</h3>
         <Form>
           <Form.Group className="mb-3">

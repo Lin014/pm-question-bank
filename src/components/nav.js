@@ -22,7 +22,7 @@ export const Navs = () => {
                     </Container>
                 </Navbar>
             </div>
-            <Outlet />       
+            <Outlet />
         </div>
 
     )

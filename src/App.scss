@@ -23,7 +23,7 @@
 
 Nav.Link.active {
   color: white;
-  background-color: #555; 
+  background-color: #555;
 }
 
 .bg-light {
@@ -46,3 +46,11 @@ input {
   color: red !important
 }
 
+.right-btn {
+  border: none;
+  cursor: pointer;
+  position: fixed;
+  bottom: 10px; 
+  right: 10px;
+  z-index: 1;
+}

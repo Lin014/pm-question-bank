@@ -87,14 +87,16 @@ export const Quesition = () => {
                     filter2.push(val)
                 }
             }
+            return filter2
         })
         setShowQuestions(filter2)
-    }, [ch1, ch2, ch3, ch4, ch5, ch6, others])
+    }, [ch1, ch2, ch3, ch4, ch5, ch6, others, questions])
 
     return (
         <div>
-            <Navs />
+            <Navs id="top"/>
             <div className="container" style={{ marginTop: "70px"}}>
+            <a href="#top"><img alt="Go to top button" className="right-btn" src={require('../pictures/godgwawa2.png')}/></a>
                 <h3 className="sub-title">Questions List</h3>
                 <QuestionCheckbox 
                     ch1={ch1} ch2={ch2} ch3={ch3} ch4={ch4} ch5={ch5} ch6={ch6} others={others}
