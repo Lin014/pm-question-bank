@@ -65,6 +65,8 @@ export const Manage = () => {
               onChange={(event) => { setNewQuestion(event.target.value) }} />
           </Form.Group>
 
+          <Form.Label># Please don't enter A or B or C or D word.</Form.Label>
+
           <Form.Group className="mb-3">
             <Form.Label>Option1</Form.Label>
             <Form.Control type="text" placeholder="Enter option"
