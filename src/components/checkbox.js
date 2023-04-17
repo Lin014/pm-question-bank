@@ -87,7 +87,7 @@ export const QuestionCheckbox= ({ch1, ch2, ch3, ch4, ch5, ch6, others, setCh1, s
     return (
         <div className="mb-3">
             <FormControlLabel
-                label="Parent"
+                label="All"
                 control={
                     <Checkbox
                         checked={ch1 && ch2 && ch3 && ch4 && ch5 && ch6 && others}
