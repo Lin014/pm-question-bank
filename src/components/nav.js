@@ -10,7 +10,7 @@ export const Navs = () => {
 
     return (
         <div>
-            <div style={{ marginBottom: '30px' }}>
+            <div style={{ width: "100%", position: "fixed", top: "0px", zIndex: "1" }}>
                 <Navbar bg="light" variant="light">
                     <Container>
                         <Navbar.Brand className="title" href="/">PM Question bank</Navbar.Brand>

@@ -8,7 +8,7 @@ export const Home = () => {
         <div>
             <Navs />
             <div className="container">
-                <img width="100%" height="100%" src={require('../components/godgwawa.jpeg')} />
+                <img style={{ marginTop: "80px"}} width="100%" height="100%" src={require('../components/godgwawa.jpeg')} />
             </div>
         </div>
     )

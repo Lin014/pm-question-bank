@@ -1,6 +1,5 @@
 import { Navs } from "../components/nav"
-import { db } from "../config/firebase"
-import { getDocs, collection } from "firebase/firestore"
+import { getDocs } from "firebase/firestore"
 import { useEffect, useState } from "react";
 
 
@@ -13,22 +12,36 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { orange } from '@mui/material/colors';
+import { collectionRef } from "../components/collectionRef";
+import { QuestionCheckbox } from "../components/checkbox";
 
 
 export const Quesition = () => {
     const [questions, setQuestions] = useState([]);
+    const [showQuestions, setShowQuestions] = useState([]);
 
-    const questionsCollectionRef = collection(db, "questions")
+    const [ch1, setCh1] = useState(true);
+    const [ch2, setCh2] = useState(true);
+    const [ch3, setCh3] = useState(true);
+    const [ch4, setCh4] = useState(true);
+    const [ch5, setCh5] = useState(true);
+    const [ch6, setCh6] = useState(true);
+    const [others, setOthers] = useState(true); 
 
     useEffect(() => {
         const getQuestions = async () => {
             try {
-                const data = await getDocs(questionsCollectionRef)
-                const filteredData = data.docs.map((doc) => ({
-                    ...doc.data(),
-                    id: doc.id,
-                }))
-                setQuestions(filteredData)
+                let filter = []
+                for (let cr in collectionRef) {
+                    const data = await getDocs(collectionRef[cr])
+                    const filteredData = data.docs.map((doc) => ({
+                        ...doc.data(),
+                        id: doc.id,
+                    }))
+                    filter.push(...filteredData)
+                }
+                setQuestions(filter)
+                setShowQuestions(filter)
             } catch (err) {
                 console.error(err)
             }
@@ -36,15 +49,66 @@ export const Quesition = () => {
         getQuestions()
     }, [])
 
+    useEffect(() => {
+        let filter2 = []
+        questions.map((val, key) => {
+            if (ch1) {
+                if (val.chapter === "ch1") {
+                    filter2.push(val)
+                }
+            }
+            if (ch2) {
+                if (val.chapter === "ch2") {
+                    filter2.push(val)
+                }
+            }
+            if (ch3) {
+                if (val.chapter === "ch3") {
+                    filter2.push(val)
+                }
+            }
+            if (ch3) {
+                if (val.chapter === "ch3") {
+                    filter2.push(val)
+                }
+            }
+            if (ch4) {
+                if (val.chapter === "ch4") {
+                    filter2.push(val)
+                }
+            }
+            if (ch5) {
+                if (val.chapter === "ch5") {
+                    filter2.push(val)
+                }
+            }
+            if (ch6) {
+                if (val.chapter === "ch6") {
+                    filter2.push(val)
+                }
+            }
+            if (others) {
+                if (val.chapter === "others") {
+                    filter2.push(val)
+                }
+            }
+        })
+        setShowQuestions(filter2)
+    }, [ch1, ch2, ch3, ch4, ch5, ch6, others])
+
     return (
         <div>
             <Navs />
-            <div className="container">
-
+            <div className="container" style={{ marginTop: "70px"}}>
                 <h3 className="sub-title">Questions List</h3>
+                <QuestionCheckbox 
+                    ch1={ch1} ch2={ch2} ch3={ch3} ch4={ch4} ch5={ch5} ch6={ch6} others={others}
+                    setCh1={setCh1} setCh2={setCh2} setCh3={setCh3} setCh4={setCh4}
+                    setCh5={setCh5} setCh6={setCh6} setOthers={setOthers}
+                />
 
                 <div>
-                    {questions.map((val, key) => {
+                    {showQuestions.sort(() => Math.random() - 0.5).map((val, key) => {
                         if (val.type === "1") {
                             return (
                                 <MultipleChoice
@@ -57,7 +121,8 @@ export const Quesition = () => {
                                     o4={val.option4}
                                     o5={val.option5}
                                     answer={val.answer}
-                                    explanation={val.explanation} />
+                                    explanation={val.explanation}
+                                    chapter={val.chapter} />
                             )
                         } else {
                             return (
@@ -66,7 +131,8 @@ export const Quesition = () => {
                                     index={key + 1}
                                     question={val.question}
                                     answer={val.answer}
-                                    explanation={val.explanation} />
+                                    explanation={val.explanation}
+                                    chapter={val.chapter} />
                             )
                         }
 
@@ -78,10 +144,11 @@ export const Quesition = () => {
     )
 }
 
-const MultipleChoice = ({ index, question, o1, o2, o3, o4, o5, answer, explanation }) => {
+const MultipleChoice = ({ index, question, o1, o2, o3, o4, o5, answer, explanation, chapter }) => {
     const [select, setSelect] = useState("");
     const [result, setResult] = useState("");
     const [result2, setResult2] = useState("");
+    const [curChapter, setCurChapter] = useState("")
 
     const showAnswer = () => {
         if (select === "") {
@@ -92,9 +159,11 @@ const MultipleChoice = ({ index, question, o1, o2, o3, o4, o5, answer, explanati
             if (select === answer) {
                 setResult("Correct!")
                 setResult2(explanation)
+                setCurChapter("Scope: " + chapter)
             } else {
                 setResult("Wrong!")
                 setResult2(explanation)
+                setCurChapter("Scope: " + chapter)
             }
         }
     }
@@ -150,16 +219,18 @@ const MultipleChoice = ({ index, question, o1, o2, o3, o4, o5, answer, explanati
                         {result}
                     </Card.Title>
                     <Card.Text>{result2}</Card.Text>
+                    <Card.Text>{curChapter}</Card.Text>
                 </Card.Body>
             </Card>
         </div>
     )
 }
 
-const TrueFalse = ({ index, question, answer, explanation }) => {
+const TrueFalse = ({ index, question, answer, explanation, chapter }) => {
     const [select, setSelect] = useState("");
     const [result, setResult] = useState("");
     const [result2, setResult2] = useState("");
+    const [curChapter, setCurChapter] = useState("")
 
     const showAnswer = () => {
         if (select === "") {
@@ -170,9 +241,11 @@ const TrueFalse = ({ index, question, answer, explanation }) => {
             if (select === answer) {
                 setResult("Correct!")
                 setResult2(explanation)
+                setCurChapter("Scope: " + chapter)
             } else {
                 setResult("Wrong!")
                 setResult2(explanation)
+                setCurChapter("Scope: " + chapter)
             }
         }
     }
@@ -213,6 +286,7 @@ const TrueFalse = ({ index, question, answer, explanation }) => {
                         {result}
                     </Card.Title>
                     <Card.Text>{result2}</Card.Text>
+                    <Card.Text>{curChapter}</Card.Text>
                 </Card.Body>
             </Card>
         </div>

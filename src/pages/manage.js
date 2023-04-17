@@ -1,7 +1,6 @@
 import Button from "react-bootstrap/Button"
 import Form from 'react-bootstrap/Form';
 import Alert from '@mui/material/Alert';
-
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -11,14 +10,12 @@ import { orange } from '@mui/material/colors';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../App.scss';
 import { Navs } from "../components/nav";
-import { db } from "../config/firebase"
-import { addDoc, collection } from "firebase/firestore"
-import { useEffect, useState } from "react";
-import { FormLabel } from "react-bootstrap";
+import { collectionRef } from "../components/collectionRef";
+import { addDoc } from "firebase/firestore"
+import { useState } from "react";
+import { FormGroup, FormLabel } from "react-bootstrap";
 
 export const Manage = () => {
-
-  const questionsCollectionRef = collection(db, "questions")
 
   const [newQuestion, setNewQuestion] = useState("");
   const [newOption1, setNewOption1] = useState("");
@@ -29,12 +26,13 @@ export const Manage = () => {
   const [newAnswer, setNewAnswer] = useState("");
   const [newExplanation, setNewExplanation] = useState("");
   const [newType, setNewType] = useState("1");
+  const [newChapter, setNewChapter] = useState("ch1");
 
   const [addState, setAddState] = useState("");
 
   const addQuestion = async () => {
     try {
-      await addDoc(questionsCollectionRef, {
+      await addDoc(collectionRef[newChapter], {
         question: newQuestion,
         option1: newOption1,
         option2: newOption2,
@@ -44,6 +42,7 @@ export const Manage = () => {
         answer: newAnswer,
         explanation: newExplanation,
         type: newType,
+        chapter: newChapter,
       })
       setAddState("success")
     } catch (err) {
@@ -56,7 +55,7 @@ export const Manage = () => {
   return (
     <div>
       <Navs />
-      <div className="container">
+      <div className="container" style={{ marginTop: "70px"}}>
         <h3 className="sub-title">Add Question</h3>
         <Form>
           <Form.Group className="mb-3">
@@ -109,7 +108,7 @@ export const Manage = () => {
               onChange={(event) => { setNewExplanation(event.target.value) }} />
           </Form.Group>
 
-          <FormControl className="mt-3">
+          <FormControl className="mb-3">
             <FormLabel>Question Type</FormLabel>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
@@ -129,12 +128,25 @@ export const Manage = () => {
             </RadioGroup>
           </FormControl>
 
+          <FormGroup className="mb-3">
+            <FormLabel>Chapter</FormLabel>
+            <Form.Select defaultValue="ch1" aria-label="Default select example" onChange={(event) => { setNewChapter(event.target.value) }}>
+              <option value="ch1">Ch1</option>
+              <option value="ch2">Ch2</option>
+              <option value="ch3">Ch3</option>
+              <option value="ch4">Ch4</option>
+              <option value="ch5">Ch5</option>
+              <option value="ch6">Ch6</option>
+              <option value="others">Others</option>
+            </Form.Select>
+          </FormGroup>
+
           <br />
 
-          <Alert className="mt-3" style={{ display: (addState === "success") ? "" : "none" }} severity="success">Added successfully!</Alert>
-          <Alert className="mt-3" style={{ display: "none" }} severity="error">Failed to add!</Alert>
+          <Alert className="mb-3" style={{ display: (addState === "success") ? "" : "none" }} severity="success">Added successfully!</Alert>
+          <Alert className="mb-3" style={{ display: (addState === "error") ? "" : "none" }} severity="error">Failed to add!</Alert>
 
-          <Button variant="primary" onClick={addQuestion} style={{ marginTop: '1.5rem', marginBottom: '2rem' }}>
+          <Button className="mb-5" variant="primary" onClick={addQuestion}>
             Submit
           </Button>
 
