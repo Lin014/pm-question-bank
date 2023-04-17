@@ -1,0 +1,48 @@
+@import "~bootstrap/scss/bootstrap.scss";
+@import './custom.scss';
+
+.App {
+  padding: 0;
+}
+
+.text-center-algin {
+  display: flex;
+  justify-self: center;
+  align-items: center;
+}
+
+.update-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.star {
+  color: red;
+}
+
+Nav.Link.active {
+  color: white;
+  background-color: #555; 
+}
+
+.bg-light {
+  background-color: rgba(#febe87, 0.2) !important;
+}
+
+.sub-title {
+  margin-bottom: 15px;
+}
+
+input {
+  margin: 0.4rem;
+}
+
+.font-color-green {
+  color: green !important
+}
+
+.font-color-red {
+  color: red !important
+}
+
