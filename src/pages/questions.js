@@ -15,7 +15,6 @@ import { orange } from '@mui/material/colors';
 import { collectionRef } from "../components/collectionRef";
 import { QuestionCheckbox } from "../components/checkbox";
 
-
 export const Quesition = () => {
     const [questions, setQuestions] = useState([]);
     const [showQuestions, setShowQuestions] = useState([]);
@@ -26,22 +25,26 @@ export const Quesition = () => {
     const [ch4, setCh4] = useState(true);
     const [ch5, setCh5] = useState(true);
     const [ch6, setCh6] = useState(true);
-    const [others, setOthers] = useState(true); 
+    const [others, setOthers] = useState(true);
 
     useEffect(() => {
         const getQuestions = async () => {
             try {
-                let filter = []
-                for (let cr in collectionRef) {
-                    const data = await getDocs(collectionRef[cr])
-                    const filteredData = data.docs.map((doc) => ({
-                        ...doc.data(),
-                        id: doc.id,
-                    }))
-                    filter.push(...filteredData)
-                }
-                setQuestions(filter)
-                setShowQuestions(filter)
+                // let filter = []
+                // for (let cr in collectionRef) {
+                //     const data = await getDocs(collectionRef[cr])
+                //     const filteredData = data.docs.map((doc) => ({
+                //         ...doc.data(),
+                //         id: doc.id,
+                //     }))
+                //     filter.push(...filteredData)
+                // }
+                const data = await getDocs(collectionRef.all)
+                const filteredData = data.docs.map((doc) => ({
+                    ...doc.data(),
+                    id: doc.id,
+                }))
+                setQuestions(filteredData)
             } catch (err) {
                 console.error(err)
             }
@@ -51,40 +54,44 @@ export const Quesition = () => {
 
     useEffect(() => {
         let filter2 = []
-        questions.map((val, key) => {
-            if (ch1) {
-                if (val.chapter === "ch1") {
-                    filter2.push(val)
+        questions.map((val) => {
+            if (ch1 && ch2 && ch3 && ch4 && ch5 && ch6 && others) {
+                return filter2 = questions
+            } else {
+                if (ch1) {
+                    if (val.chapter === "ch1") {
+                        filter2.push(val)
+                    }
                 }
-            }
-            if (ch2) {
-                if (val.chapter === "ch2") {
-                    filter2.push(val)
+                if (ch2) {
+                    if (val.chapter === "ch2") {
+                        filter2.push(val)
+                    }
                 }
-            }
-            if (ch3) {
-                if (val.chapter === "ch3") {
-                    filter2.push(val)
+                if (ch3) {
+                    if (val.chapter === "ch3") {
+                        filter2.push(val)
+                    }
                 }
-            }
-            if (ch4) {
-                if (val.chapter === "ch4") {
-                    filter2.push(val)
+                if (ch4) {
+                    if (val.chapter === "ch4") {
+                        filter2.push(val)
+                    }
                 }
-            }
-            if (ch5) {
-                if (val.chapter === "ch5") {
-                    filter2.push(val)
+                if (ch5) {
+                    if (val.chapter === "ch5") {
+                        filter2.push(val)
+                    }
                 }
-            }
-            if (ch6) {
-                if (val.chapter === "ch6") {
-                    filter2.push(val)
+                if (ch6) {
+                    if (val.chapter === "ch6") {
+                        filter2.push(val)
+                    }
                 }
-            }
-            if (others) {
-                if (val.chapter === "others") {
-                    filter2.push(val)
+                if (others) {
+                    if (val.chapter === "others") {
+                        filter2.push(val)
+                    }
                 }
             }
             return filter2
@@ -94,11 +101,11 @@ export const Quesition = () => {
 
     return (
         <div>
-            <Navs id="top"/>
-            <div className="container" style={{ marginTop: "70px"}}>
-            <a href="#top"><img alt="Go to top button" className="right-btn" src={require('../pictures/godgwawa2.png')}/></a>
+            <Navs id="top" />
+            <div className="container" style={{ marginTop: "70px" }}>
+                <a href="#top"><img alt="Go to top button" className="right-btn" src={require('../pictures/godgwawa2.png')} /></a>
                 <h3 className="sub-title">Questions List</h3>
-                <QuestionCheckbox 
+                <QuestionCheckbox
                     ch1={ch1} ch2={ch2} ch3={ch3} ch4={ch4} ch5={ch5} ch6={ch6} others={others}
                     setCh1={setCh1} setCh2={setCh2} setCh3={setCh3} setCh4={setCh4}
                     setCh5={setCh5} setCh6={setCh6} setOthers={setOthers}

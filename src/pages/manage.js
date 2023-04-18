@@ -32,7 +32,7 @@ export const Manage = () => {
 
   const addQuestion = async () => {
     try {
-      await addDoc(collectionRef[newChapter], {
+      await addDoc(collectionRef.all, {
         question: newQuestion,
         option1: newOption1,
         option2: newOption2,
