@@ -2,10 +2,9 @@ import { Navs } from "../components/nav"
 import { getDocs } from "firebase/firestore"
 import { useEffect, useState } from "react";
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.scss';
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Spinner } from "react-bootstrap";
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -15,9 +14,10 @@ import { orange } from '@mui/material/colors';
 import { collectionRef } from "../components/collectionRef";
 import { QuestionCheckbox } from "../components/checkbox";
 
-export const Quesition = () => {
+const Questions = () => {
     const [questions, setQuestions] = useState([]);
     const [showQuestions, setShowQuestions] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const [ch1, setCh1] = useState(true);
     const [ch2, setCh2] = useState(true);
@@ -28,17 +28,9 @@ export const Quesition = () => {
     const [others, setOthers] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true)
         const getQuestions = async () => {
             try {
-                // let filter = []
-                // for (let cr in collectionRef) {
-                //     const data = await getDocs(collectionRef[cr])
-                //     const filteredData = data.docs.map((doc) => ({
-                //         ...doc.data(),
-                //         id: doc.id,
-                //     }))
-                //     filter.push(...filteredData)
-                // }
                 const data = await getDocs(collectionRef.all)
                 const filteredData = data.docs.map((doc) => ({
                     ...doc.data(),
@@ -53,51 +45,58 @@ export const Quesition = () => {
     }, [])
 
     useEffect(() => {
+        console.log("is Loading: ", isLoading)
         let filter2 = []
         questions.map((val) => {
             if (ch1 && ch2 && ch3 && ch4 && ch5 && ch6 && others) {
                 return filter2 = questions
             } else {
-                if (ch1) {
-                    if (val.chapter === "ch1") {
-                        filter2.push(val)
-                    }
-                }
-                if (ch2) {
-                    if (val.chapter === "ch2") {
-                        filter2.push(val)
-                    }
-                }
-                if (ch3) {
-                    if (val.chapter === "ch3") {
-                        filter2.push(val)
-                    }
-                }
-                if (ch4) {
-                    if (val.chapter === "ch4") {
-                        filter2.push(val)
-                    }
-                }
-                if (ch5) {
-                    if (val.chapter === "ch5") {
-                        filter2.push(val)
-                    }
-                }
-                if (ch6) {
-                    if (val.chapter === "ch6") {
-                        filter2.push(val)
-                    }
-                }
-                if (others) {
-                    if (val.chapter === "others") {
-                        filter2.push(val)
-                    }
+                if ((ch1 && val.chapter === "ch1") ||
+                    (ch2 && val.chapter === "ch2") ||
+                    (ch3 && val.chapter === "ch3") ||
+                    (ch4 && val.chapter === "ch4") ||
+                    (ch5 && val.chapter === "ch5") ||
+                    (ch6 && val.chapter === "ch6") ||
+                    (others && val.chapter === "others")) {
+                    filter2.push(val)
                 }
             }
             return filter2
         })
-        setShowQuestions(filter2)
-    }, [ch1, ch2, ch3, ch4, ch5, ch6, others, questions])
+        setShowQuestions(randomAry(filter2))
+        setIsLoading(false)
+        console.log("is Loading: ", isLoading)
+    }, [ch1, ch2, ch3, ch4, ch5, ch6, others, questions, isLoading])
+
+    const randomAry = (ary) => {
+        return ary.sort(() => Math.random() - 0.5)
+    }
+
+    const questionList = (val, key) => {
+        if (val.type === "1") {
+            let optionList = randomAry([val.option1, val.option2, val.option3, val.option4, val.option5])
+            return (
+                <MultipleChoice
+                    key={key}
+                    index={key + 1}
+                    question={val.question}
+                    options={optionList}
+                    answer={val.answer}
+                    explanation={val.explanation}
+                    chapter={val.chapter} />
+            )
+        } else {
+            return (
+                <TrueFalse
+                    key={key}
+                    index={key + 1}
+                    question={val.question}
+                    answer={val.answer}
+                    explanation={val.explanation}
+                    chapter={val.chapter} />
+            )
+        }
+    }
 
     return (
         <div>
@@ -109,46 +108,28 @@ export const Quesition = () => {
                     ch1={ch1} ch2={ch2} ch3={ch3} ch4={ch4} ch5={ch5} ch6={ch6} others={others}
                     setCh1={setCh1} setCh2={setCh2} setCh3={setCh3} setCh4={setCh4}
                     setCh5={setCh5} setCh6={setCh6} setOthers={setOthers}
+                    setIsLoading={setIsLoading}
                 />
-
                 <div>
-                    {showQuestions.sort(() => Math.random() - 0.5).map((val, key) => {
-                        if (val.type === "1") {
-                            return (
-                                <MultipleChoice
-                                    key={key}
-                                    index={key + 1}
-                                    question={val.question}
-                                    o1={val.option1}
-                                    o2={val.option2}
-                                    o3={val.option3}
-                                    o4={val.option4}
-                                    o5={val.option5}
-                                    answer={val.answer}
-                                    explanation={val.explanation}
-                                    chapter={val.chapter} />
-                            )
-                        } else {
-                            return (
-                                <TrueFalse
-                                    key={key}
-                                    index={key + 1}
-                                    question={val.question}
-                                    answer={val.answer}
-                                    explanation={val.explanation}
-                                    chapter={val.chapter} />
-                            )
-                        }
-
-                    })}
+                    {isLoading ?
+                        <div className="d-flex justify-content-center">
+                            <Spinner className="spinner-border text-primary" style={{ width: "3rem", height: "3rem" }}>
+                                <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                        </div>
+                        : showQuestions.map((val, key) => {
+                            return questionList(val, key)
+                        })}
                 </div>
+
             </div>
 
         </div>
     )
 }
 
-const MultipleChoice = ({ index, question, o1, o2, o3, o4, o5, answer, explanation, chapter }) => {
+
+const MultipleChoice = ({ index, question, options, answer, explanation, chapter }) => {
     const [select, setSelect] = useState("");
     const [result, setResult] = useState("");
     const [result2, setResult2] = useState("");
@@ -187,31 +168,31 @@ const MultipleChoice = ({ index, question, o1, o2, o3, o4, o5, answer, explanati
                             defaultValue=""
                             name="radio-buttons-group"
                         >
-                            <FormControlLabel value={o1} control={<Radio sx={{
+                            <FormControlLabel value={options[0]} control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
-                            }} />} label={o1} onChange={(event) => setSelect(event.target.value)} />
-                            <FormControlLabel value={o2} control={<Radio sx={{
+                            }} />} label={options[0]} onChange={(event) => setSelect(event.target.value)} />
+                            <FormControlLabel value={options[1]} control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
-                            }} />} label={o2} onChange={(event) => setSelect(event.target.value)} />
-                            <FormControlLabel value={o3} control={<Radio sx={{
+                            }} />} label={options[1]} onChange={(event) => setSelect(event.target.value)} />
+                            <FormControlLabel value={options[2]} control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
-                            }} />} label={o3} onChange={(event) => setSelect(event.target.value)} />
-                            <FormControlLabel value={o4} control={<Radio sx={{
+                            }} />} label={options[2]} onChange={(event) => setSelect(event.target.value)} />
+                            <FormControlLabel value={options[3]} control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
-                            }} />} label={o4} onChange={(event) => setSelect(event.target.value)} />
-                            <FormControlLabel value={o5} control={<Radio sx={{
+                            }} />} label={options[3]} onChange={(event) => setSelect(event.target.value)} />
+                            <FormControlLabel value={options[4]} control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
-                            }} />} label={o5} onChange={(event) => setSelect(event.target.value)} />
+                            }} />} label={options[4]} onChange={(event) => setSelect(event.target.value)} />
                         </RadioGroup>
                     </FormControl>
 
@@ -296,3 +277,5 @@ const TrueFalse = ({ index, question, answer, explanation, chapter }) => {
         </div>
     )
 }
+
+export default Questions;

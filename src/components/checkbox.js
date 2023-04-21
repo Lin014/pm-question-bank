@@ -4,9 +4,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { orange } from '@mui/material/colors';
 
-export const QuestionCheckbox= ({ch1, ch2, ch3, ch4, ch5, ch6, others, setCh1, setCh2, setCh3, setCh4, setCh5, setCh6, setOthers}) => {
+export const QuestionCheckbox = (
+    { ch1, ch2, ch3, ch4, ch5, ch6, others,
+        setCh1, setCh2, setCh3, setCh4, setCh5, setCh6, setOthers, setIsLoading }) => {
 
     const handleChange1 = (event) => {
+        setIsLoading(true)
         setCh1(event.target.checked)
         setCh2(event.target.checked)
         setCh3(event.target.checked)
@@ -25,7 +28,7 @@ export const QuestionCheckbox= ({ch1, ch2, ch3, ch4, ch5, ch6, others, setCh1, s
                     '&.Mui-checked': {
                         color: orange[500],
                     },
-                }} checked={ch1} onChange={(e) => setCh1(e.target.checked)} />}
+                }} checked={ch1} onChange={(e) => {setCh1(e.target.checked); setIsLoading(true)}} />}
             />
             <FormControlLabel
                 label="ch2"
@@ -34,7 +37,7 @@ export const QuestionCheckbox= ({ch1, ch2, ch3, ch4, ch5, ch6, others, setCh1, s
                     '&.Mui-checked': {
                         color: orange[500],
                     },
-                }} checked={ch2} onChange={(e) => setCh2(e.target.checked)} />}
+                }} checked={ch2} onChange={(e) => {setCh2(e.target.checked); setIsLoading(true)}} />}
             />
             <FormControlLabel
                 label="ch3"
@@ -43,7 +46,7 @@ export const QuestionCheckbox= ({ch1, ch2, ch3, ch4, ch5, ch6, others, setCh1, s
                     '&.Mui-checked': {
                         color: orange[500],
                     },
-                }} checked={ch3} onChange={(e) => setCh3(e.target.checked)} />}
+                }} checked={ch3} onChange={(e) => {setCh3(e.target.checked); setIsLoading(true)}} />}
             />
             <FormControlLabel
                 label="ch4"
@@ -52,7 +55,7 @@ export const QuestionCheckbox= ({ch1, ch2, ch3, ch4, ch5, ch6, others, setCh1, s
                     '&.Mui-checked': {
                         color: orange[500],
                     },
-                }} checked={ch4} onChange={(e) => setCh4(e.target.checked)} />}
+                }} checked={ch4} onChange={(e) => {setCh4(e.target.checked); setIsLoading(true)}} />}
             />
             <FormControlLabel
                 label="ch5"
@@ -61,7 +64,7 @@ export const QuestionCheckbox= ({ch1, ch2, ch3, ch4, ch5, ch6, others, setCh1, s
                     '&.Mui-checked': {
                         color: orange[500],
                     },
-                }} checked={ch5} onChange={(e) => setCh5(e.target.checked)} />}
+                }} checked={ch5} onChange={(e) => {setCh5(e.target.checked); setIsLoading(true)}} />}
             />
             <FormControlLabel
                 label="ch6"
@@ -70,7 +73,7 @@ export const QuestionCheckbox= ({ch1, ch2, ch3, ch4, ch5, ch6, others, setCh1, s
                     '&.Mui-checked': {
                         color: orange[500],
                     },
-                }} checked={ch6} onChange={(e) => setCh6(e.target.checked)} />}
+                }} checked={ch6} onChange={(e) => {setCh6(e.target.checked); setIsLoading(true)}} />}
             />
             <FormControlLabel
                 label="others"
@@ -79,7 +82,7 @@ export const QuestionCheckbox= ({ch1, ch2, ch3, ch4, ch5, ch6, others, setCh1, s
                     '&.Mui-checked': {
                         color: orange[500],
                     },
-                }} checked={others} onChange={(e) => setOthers(e.target.checked)} />}
+                }} checked={others} onChange={(e) => {setOthers(e.target.checked); setIsLoading(true)}} />}
             />
         </Box>
     );
@@ -95,12 +98,12 @@ export const QuestionCheckbox= ({ch1, ch2, ch3, ch4, ch5, ch6, others, setCh1, s
                         sx={{
                             color: orange[500],
                             '&.Mui-checked': {
-                              color: orange[500],
+                                color: orange[500],
                             },
-                            '&.MuiCheckbox-indeterminate':{
+                            '&.MuiCheckbox-indeterminate': {
                                 color: orange[500]
                             }
-                          }}
+                        }}
                     />
                 }
             />

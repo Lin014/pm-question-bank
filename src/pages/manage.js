@@ -15,7 +15,7 @@ import { addDoc } from "firebase/firestore"
 import { useState } from "react";
 import { FormGroup, FormLabel } from "react-bootstrap";
 
-export const Manage = () => {
+const Manage = () => {
 
   const [newQuestion, setNewQuestion] = useState("");
   const [newOption1, setNewOption1] = useState("");
@@ -157,3 +157,5 @@ export const Manage = () => {
     </div>
   );
 }
+
+export default Manage;

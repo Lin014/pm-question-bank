@@ -54,3 +54,8 @@ input {
   right: 10px;
   z-index: 1;
 }
+
+.text-primary {
+  --bs-text-opacity: 1;
+  color: rgba(#feb272, var(--bs-text-opacity)) !important;
+}

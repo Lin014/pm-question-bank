@@ -3,7 +3,7 @@ import { Navs } from "../components/nav"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.scss';
 
-export const Home = () => {
+const Home = () => {
     return (
         <div>
             <Navs id="top"/>
@@ -15,3 +15,5 @@ export const Home = () => {
     )
 
 }
+
+export default Home;

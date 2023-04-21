@@ -17,7 +17,7 @@ export const Navs = () => {
                         <Nav className="me-auto">
                             <CustomLink href="/">Home</CustomLink>
                             <CustomLink href="/manage">Manage</CustomLink>
-                            <CustomLink href="/quesitions">Questions</CustomLink>
+                            <CustomLink href="/questions">Questions</CustomLink>
                         </Nav>
                     </Container>
                 </Navbar>
