@@ -5,8 +5,7 @@ import './App.scss';
 
 import Home from './pages/home';
 import Questions from './pages/questions';
-import Manage from './pages/manage'; 
-import { Spinner } from 'react-bootstrap';
+import Manage from './pages/manage';
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },

@@ -21,11 +21,6 @@
   color: red;
 }
 
-Nav.Link.active {
-  color: white;
-  background-color: #555;
-}
-
 .bg-light {
   background-color: #fcecde !important;
 }
@@ -50,7 +45,7 @@ input {
   border: none;
   cursor: pointer;
   position: fixed;
-  bottom: 10px; 
+  bottom: 10px;
   right: 10px;
   z-index: 1;
 }
@@ -58,4 +53,9 @@ input {
 .text-primary {
   --bs-text-opacity: 1;
   color: rgba(#feb272, var(--bs-text-opacity)) !important;
+}
+
+.navbar-toggler:focus {
+  border: var(--bs-border-width) solid rgba(#feb272, 0.3);
+  box-shadow: 0 0 0 0.2rem rgba(#feb272, 0.2);
 }
