@@ -138,6 +138,10 @@ const Manage = () => {
               <option value="ch4">Ch4</option>
               <option value="ch5">Ch5</option>
               <option value="ch6">Ch6</option>
+              <option value="ch7">Ch7</option>
+              <option value="ch8">Ch8</option>
+              <option value="ch9">Ch9</option>
+              <option value="ch13">Ch13</option>
               <option value="others">Others</option>
             </Form.Select>
           </FormGroup>

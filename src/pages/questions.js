@@ -25,6 +25,10 @@ const Questions = () => {
     const [ch4, setCh4] = useState(true);
     const [ch5, setCh5] = useState(true);
     const [ch6, setCh6] = useState(true);
+    const [ch7, setCh7] = useState(true);
+    const [ch8, setCh8] = useState(true);
+    const [ch9, setCh9] = useState(true);
+    const [ch13, setCh13] = useState(true);
     const [others, setOthers] = useState(true);
 
     useEffect(() => {
@@ -48,7 +52,7 @@ const Questions = () => {
         console.log("is Loading: ", isLoading)
         let filter2 = []
         questions.map((val) => {
-            if (ch1 && ch2 && ch3 && ch4 && ch5 && ch6 && others) {
+            if (ch1 && ch2 && ch3 && ch4 && ch5 && ch6 && ch7 && ch8 && ch9 && ch13 && others) {
                 return filter2 = questions
             } else {
                 if ((ch1 && val.chapter === "ch1") ||
@@ -57,6 +61,10 @@ const Questions = () => {
                     (ch4 && val.chapter === "ch4") ||
                     (ch5 && val.chapter === "ch5") ||
                     (ch6 && val.chapter === "ch6") ||
+                    (ch7 && val.chapter === "ch7") ||
+                    (ch8 && val.chapter === "ch8") ||
+                    (ch9 && val.chapter === "ch9") ||
+                    (ch13 && val.chapter === "ch13") ||
                     (others && val.chapter === "others")) {
                     filter2.push(val)
                 }
@@ -66,7 +74,7 @@ const Questions = () => {
         setShowQuestions(randomAry(filter2))
         setIsLoading(false)
         console.log("is Loading: ", isLoading)
-    }, [ch1, ch2, ch3, ch4, ch5, ch6, others, questions, isLoading])
+    }, [ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch13, others, questions, isLoading])
 
     const randomAry = (ary) => {
         return ary.sort(() => Math.random() - 0.5)
@@ -83,7 +91,8 @@ const Questions = () => {
                     options={optionList}
                     answer={val.answer}
                     explanation={val.explanation}
-                    chapter={val.chapter} />
+                    chapter={val.chapter}
+                    id={val.id} />
             )
         } else {
             return (
@@ -93,7 +102,8 @@ const Questions = () => {
                     question={val.question}
                     answer={val.answer}
                     explanation={val.explanation}
-                    chapter={val.chapter} />
+                    chapter={val.chapter}
+                    id={val.id} />
             )
         }
     }
@@ -105,9 +115,11 @@ const Questions = () => {
                 <a href="#top"><img alt="Go to top button" className="right-btn" src={require('../pictures/godgwawa2.png')} /></a>
                 <h3 className="sub-title">Questions List</h3>
                 <QuestionCheckbox
-                    ch1={ch1} ch2={ch2} ch3={ch3} ch4={ch4} ch5={ch5} ch6={ch6} others={others}
+                    ch1={ch1} ch2={ch2} ch3={ch3} ch4={ch4} ch5={ch5} ch6={ch6} 
+                    ch7={ch7} ch8={ch8} ch9={ch9} ch13={ch13} others={others}
                     setCh1={setCh1} setCh2={setCh2} setCh3={setCh3} setCh4={setCh4}
-                    setCh5={setCh5} setCh6={setCh6} setOthers={setOthers}
+                    setCh5={setCh5} setCh6={setCh6} setCh7={setCh7} setCh8={setCh8}
+                    setCh9={setCh9} setCh13={setCh13} setOthers={setOthers}
                     setIsLoading={setIsLoading}
                 />
                 <div>
@@ -129,7 +141,7 @@ const Questions = () => {
 }
 
 
-const MultipleChoice = ({ index, question, options, answer, explanation, chapter }) => {
+const MultipleChoice = ({ index, question, options, answer, explanation, chapter, id }) => {
     const [select, setSelect] = useState("");
     const [result, setResult] = useState("");
     const [result2, setResult2] = useState("");
@@ -159,6 +171,7 @@ const MultipleChoice = ({ index, question, options, answer, explanation, chapter
                 <Card.Header as="h6">Multiple Choice</Card.Header>
                 <Card.Body>
                     <Card.Title>Question {index}</Card.Title>
+
                     <Card.Text>
                         {question}
                     </Card.Text>
@@ -205,13 +218,14 @@ const MultipleChoice = ({ index, question, options, answer, explanation, chapter
                     </Card.Title>
                     <Card.Text>{result2}</Card.Text>
                     <Card.Text>{curChapter}</Card.Text>
+                    <footer className="blockquote-footer">id: {id}</footer>
                 </Card.Body>
             </Card>
         </div>
     )
 }
 
-const TrueFalse = ({ index, question, answer, explanation, chapter }) => {
+const TrueFalse = ({ index, question, answer, explanation, chapter, id }) => {
     const [select, setSelect] = useState("");
     const [result, setResult] = useState("");
     const [result2, setResult2] = useState("");
@@ -272,6 +286,7 @@ const TrueFalse = ({ index, question, answer, explanation, chapter }) => {
                     </Card.Title>
                     <Card.Text>{result2}</Card.Text>
                     <Card.Text>{curChapter}</Card.Text>
+                    <footer className="blockquote-footer">id: {id}</footer>
                 </Card.Body>
             </Card>
         </div>
