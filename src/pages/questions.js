@@ -181,27 +181,27 @@ const MultipleChoice = ({ index, question, options, answer, explanation, chapter
                             defaultValue=""
                             name="radio-buttons-group"
                         >
-                            <FormControlLabel value={options[0]} control={<Radio sx={{
+                            <FormControlLabel className="mb-2" value={options[0]} control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
                             }} />} label={options[0]} onChange={(event) => setSelect(event.target.value)} />
-                            <FormControlLabel value={options[1]} control={<Radio sx={{
+                            <FormControlLabel className="mb-2" value={options[1]} control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
                             }} />} label={options[1]} onChange={(event) => setSelect(event.target.value)} />
-                            <FormControlLabel value={options[2]} control={<Radio sx={{
+                            <FormControlLabel className="mb-2" value={options[2]} control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
                             }} />} label={options[2]} onChange={(event) => setSelect(event.target.value)} />
-                            <FormControlLabel value={options[3]} control={<Radio sx={{
+                            <FormControlLabel className="mb-2" value={options[3]} control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
                             }} />} label={options[3]} onChange={(event) => setSelect(event.target.value)} />
-                            <FormControlLabel value={options[4]} control={<Radio sx={{
+                            <FormControlLabel className="mb-2" value={options[4]} control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
