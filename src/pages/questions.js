@@ -264,12 +264,12 @@ const TrueFalse = ({ index, question, answer, explanation, chapter, id }) => {
                             defaultValue=""
                             name="radio-buttons-group"
                         >
-                            <FormControlLabel value="TRUE" control={<Radio sx={{
+                            <FormControlLabel className="mb-2" value="TRUE" control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
                             }} />} label="TRUE" onChange={(event) => setSelect(event.target.value)} />
-                            <FormControlLabel value="FALSE" control={<Radio sx={{
+                            <FormControlLabel className="mb-2" value="FALSE" control={<Radio sx={{
                                 '&.Mui-checked': {
                                     color: orange[500],
                                 },
