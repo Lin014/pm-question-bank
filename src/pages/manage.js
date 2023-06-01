@@ -5,6 +5,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import Snackbar from '@mui/material/Snackbar';
 import { orange } from '@mui/material/colors';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -28,7 +29,19 @@ const Manage = () => {
   const [newType, setNewType] = useState("1");
   const [newChapter, setNewChapter] = useState("ch1");
 
-  const [addState, setAddState] = useState("");
+  // const [addState, setAddState] = useState("");
+
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [failOpen, setFailOpen] = useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSuccessOpen(false);
+    setFailOpen(false);
+  };
 
   const addQuestion = async () => {
     try {
@@ -44,9 +57,9 @@ const Manage = () => {
         type: newType,
         chapter: newChapter,
       })
-      setAddState("success")
+      setSuccessOpen(true)
     } catch (err) {
-      setAddState("error")
+      setFailOpen(true)
       console.error(err)
     }
 
@@ -148,8 +161,20 @@ const Manage = () => {
 
           <br />
 
-          <Alert className="mb-3" style={{ display: (addState === "success") ? "" : "none" }} severity="success">Added successfully!</Alert>
-          <Alert className="mb-3" style={{ display: (addState === "error") ? "" : "none" }} severity="error">Failed to add!</Alert>
+          {/* <Alert className="mb-3" style={{ display: (addState === "success") ? "" : "none" }} severity="success">Added successfully!</Alert>
+          <Alert className="mb-3" style={{ display: (addState === "error") ? "" : "none" }} severity="error">Failed to add!</Alert> */}
+
+          <Snackbar open={successOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
+            <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+              Added successfully!
+            </Alert>
+          </Snackbar>
+
+          <Snackbar open={failOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
+            <Alert onClose={handleSnackbarClose} severity="error" sx={{ width: '100%' }}>
+              Failed to add!
+            </Alert>
+          </Snackbar>
 
           <Button className="mb-5" variant="primary" onClick={addQuestion}>
             Submit
