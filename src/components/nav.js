@@ -12,7 +12,7 @@ export const Navs = () => {
             <div style={{ width: "100%", position: "fixed", top: "0px", zIndex: "1" }}>
                 <Navbar bg="light" expand="lg">
                     <Container>
-                        <Navbar.Brand href="#">PM Question bank</Navbar.Brand>
+                        <Navbar.Brand href="/">PM Question bank</Navbar.Brand>
                         <Navbar.Toggle aria-controls="navbarScroll"/>
                         <Navbar.Collapse id="navbarScroll">
                             <Nav
